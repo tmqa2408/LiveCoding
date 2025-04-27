@@ -27,7 +27,7 @@ class PersonalPage(BasePage):
     def save_changes(self):
         self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON)).click()
 
-    @allure.step("Changes has been saved successfuly")
+    @allure.step("Changes has been saved successful")
     def is_changes_saved(self):
         self.wait.until(EC.invisibility_of_element_located(self.SPINNER))
         self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_FIELD))

@@ -1,9 +1,10 @@
-version: '3.7'
+
 
 services:
   regression:
-    image: python:3.12.0a4-alpine3.17
+    image: python:3.12-alpine
     build:
+      shm_size: '2gb'  # Нужно для Chrome (чтобы избежать ошибок с shared memory)
       context: .
       dockerfile: Dockerfile
     volumes:
