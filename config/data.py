@@ -5,5 +5,8 @@ load_dotenv()
 
 class Data:
 
-    LOGIN = os.getenv("LOGIN")
-    PASSWORD = os.getenv("PASSWORD")
+    LOGIN = "Admin"
+    PASSWORD = "admin123"
+
+    # LOGIN = Admin
+    # PASSWORD = admin123
