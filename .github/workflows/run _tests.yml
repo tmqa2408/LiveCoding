@@ -17,7 +17,7 @@ jobs:
       - name: Install Chrome
         run: sudo apt-get install google-chrome-stable
       - uses: actions/checkout@v2
-      - uses: nanasess/setup-chromedriver@v2
+      - uses: anaphases/setup-chromedriver@v2
         with:
            # Optional: do not specify to match Chrome's version
            chromedriver-version: '135.0.7049.96'
@@ -38,16 +38,6 @@ jobs:
           path:
             allure-results
           retention-days: 1
-
-
-
-
-
-
-
-
-
-
 #name: Automated tests
 #
 #on:
