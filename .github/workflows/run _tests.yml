@@ -19,7 +19,7 @@ jobs:
       - name: install dependencies
         run: pip install -r requirements.txt
       - name: Run test
-        run: pytest test/feature_open_page_test.py
+        run: pytest tests/feature_open_page_test.py
 
 
   test2:
