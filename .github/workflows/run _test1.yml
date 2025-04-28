@@ -38,7 +38,7 @@ jobs:
         run: sudo apt-get install google-chrome-stable
       - name: install dependencies
         run: pip install -r requirements.txt
-      - name: Run test
+      - name: test1
         run: pytest tests/feature_profile_test.py --alluredir=allure-results
       - name: Store allure results
         uses: actions/upload-artifact@v3
