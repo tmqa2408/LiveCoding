@@ -36,6 +36,8 @@ jobs:
         run: sudo apt-get install google-chrome-stable
       - name: install dependencies
         run: pip install -r requirements.txt
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3  
       - name: Run test
         run: pytest tests/feature_open_page_test.py
 
