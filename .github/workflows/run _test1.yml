@@ -1,17 +1,21 @@
 name: Automated test1
 
 on:
-  workflow_dispatch:
-    inputs:
-      deployment_target:
-        description: Choose target
-        required: true
-        default: test1
-        type: choice
-        options:
-          - test1
-          - test2
-          - all
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 22 * * *'
+
+#  workflow_dispatch:
+#    inputs:
+#      deployment_target:
+#        description: Choose target
+#        required: true
+#        default: test1
+#        type: choice
+#        options:
+#          - test1
+#          - test2
+#          - all
 
 permissions:
   contents: read
