@@ -1,4 +1,4 @@
-name: Automated tests
+name: Automated test2
 
 on:
   schedule:
@@ -6,24 +6,6 @@ on:
     - cron:  '30 15 * * *'
 
 jobs:
-  test1:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11.9"
-      - name: Install Chrome
-        run: sudo apt-get install google-chrome-stable
-      - name: install dependencies
-        run: pip install -r requirements.txt
-      - name: Run test
-        run: pytest tests/feature_open_page_test.py
-
-
   test2:
     runs-on: ubuntu-latest
 
