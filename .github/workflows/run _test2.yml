@@ -1,12 +1,34 @@
-name: Automated test2
+name: Automated test1
 
 on:
-  schedule:
+#  schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 15 * * *'
+#    - cron:  '30 22 * * *'
+
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: Choose target
+        required: true
+        default: test1
+        type: choice
+        options:
+          - test1
+          - test2
+          - all
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+#on:
+#  schedule:
+#    # * is a special character in YAML so you have to quote this string
+#    - cron:  '30 15 * * *'
 
 jobs:
-  test2:
+  test1:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,5 +42,46 @@ jobs:
         run: sudo apt-get install google-chrome-stable
       - name: install dependencies
         run: pip install -r requirements.txt
-      - name: Run test
-        run: pytest tests/feature_profile_test.py
+      - name: test1
+        run: pytest tests/feature_profile_test.py --alluredir=allure-results
+      - name: Store allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path:
+            allure-results
+          retention-days: 1
+
+  generate-report:
+    runs-on: ubuntu-latest
+    needs: test1
+    name: Generate report
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'microsoft' # See 'Supported distributions' for available options
+          java-version: '17'
+      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz && sudo tar -zxvf allure-2.34.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.34.0/bin/allure /usr/bin/allure
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
+      - run: allure generate -c allure-results -o _site
+      - name: Store generated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: _site
+          path:
+            _site
+          retention-days: 1
+
+  publish-report:
+    runs-on: ubuntu-latest
+    needs: generate-report
+    name: Report publication
+    steps:
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
